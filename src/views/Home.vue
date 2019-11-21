@@ -1,21 +1,37 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <v-layout>
-      <v-flex>
-        <textarea />
-      </v-flex>
+    <VLayout>
+      <VFlex>
+        <VTextarea v-model="startNumbers" />
+      </VFlex>
 
-      <v-flex>
-        <textarea />
-      </v-flex>
-    </v-layout>
+      <VFlex>
+        <VTextarea v-model="endNumbers" />
+      </VFlex>
+    </VLayout>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import numbers from '@/store/numbers'
+
 export default {
   name: 'home',
-  components: {},
+
+  data () {
+    return {
+      startNumbers: '',
+      endNumbers: '',
+    }
+  },
+
+  watch: {
+    startNumbers (value: string) {
+      numbers.start = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
+    },
+    endNumbers (value: string) {
+      numbers.end = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
+    },
+  },
 }
 </script>
