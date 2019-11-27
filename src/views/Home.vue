@@ -9,6 +9,10 @@
         <VTextarea v-model="endNumbers" />
       </VFlex>
     </VLayout>
+
+    <VBtn @click="$router.push({ name: 'runningField' })">
+      Start
+    </VBtn>
   </div>
 </template>
 
