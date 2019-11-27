@@ -4,13 +4,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 
-export default Vue.extend({
-  name: 'Point',
+@Component
+export default class Point extends Vue {
+  @Prop({ type: Number, required: true })
+  readonly xPos!: number
 
-  props: {
-    xPos: { type: Number, required: true },
-    yPos: { type: Number, required: true },
-  },
-})
+  @Prop({ type: Number, required: true })
+  readonly yPos!: number
+}
 </script>
