@@ -17,8 +17,6 @@ export async function progress ({ min = 0, max, handler, steps = 100, intervalTi
   let internalValue = 0
   const step = valueRange / steps
 
-  console.log('progress', { min, max, handler, steps, intervalTime })
-
   while (internalValue <= valueRange) {
     await sleep(intervalTime)
     internalValue += step
