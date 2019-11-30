@@ -2,8 +2,9 @@
   <div class="running-field">
     <svg width="1105" height="700">
       <Point v-for="position in positions" :key="position.index"
-        :x-pos="position.start.x"
-        :y-pos="position.start.y"
+        :first-value="position.start"
+        :second-value="position.end"
+        :lane="position.lane"
       />
     </svg>
   </div>
@@ -14,7 +15,6 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
 import Point from '@/components/runningField/Point.vue'
-import { calculatePosition } from '@/utils/calculator'
 
 const MAX_LANES = 8
 
@@ -22,24 +22,19 @@ const MAX_LANES = 8
   components: { Point },
 })
 export default class RunningField extends Vue {
-  private numbers: number[][] = [
-    [29, 10],
-    [31, 10],
-    [37, 10],
-    [41, 10],
-  ]
+  private numbers: number[][] = [...Array(101).keys()].map(i => [i, 10])
 
   get positions () {
     const positions = []
 
     let index = 0
     for (const [start, end] of this.numbers) {
-      const lane = (index % MAX_LANES) + 1
+      const lane = 1 // (index % MAX_LANES) + 1
       positions.push({
         index: ++index,
         lane,
-        start: calculatePosition(start, lane),
-        end: calculatePosition(end, lane),
+        start,
+        end,
       })
     }
 
