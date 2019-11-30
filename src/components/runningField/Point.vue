@@ -1,7 +1,7 @@
 <template>
   <g>
     <circle r="3" :cx="xPos" :cy="yPos" />
-    <text :x="xPos - 0.5" :y="yPos + 0.5">{{ value }}</text>
+    <text v-if="showNumber" :x="xPos - 0.5" :y="yPos + 0.5">{{ value }}</text>
   </g>
 </template>
 
@@ -21,10 +21,15 @@ export default class Point extends Vue {
   @Prop({ type: Number, required: true })
   readonly lane!: number
 
-  // private progress: number = 0
+  @Prop({ type: Number, required: true })
+  readonly progress!: number
+
+  private showNumber = false
 
   get value (): number {
-    return this.firstValue
+    const valueRange = this.secondValue - this.firstValue
+
+    return this.firstValue + (valueRange * this.progress)
   }
 
   get position (): Position {

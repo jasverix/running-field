@@ -68,7 +68,7 @@ function getSecondSwingPosition (value: number, lane: number): Position {
   const minYValue = getLongLinePosition(lane, false)
   const maxYValue = getLongLinePosition(lane, true)
 
-  const minXValue = 86 + laneSeparator * laneMultiplier
+  const minXValue = 86 - laneSeparator * laneMultiplier
   const maxXValue = 310
 
   const { xPercentage, yPercentage } = getSwingPercentage(swingValue, true)

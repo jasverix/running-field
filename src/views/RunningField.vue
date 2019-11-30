@@ -1,12 +1,7 @@
 <template>
-  <div class="running-field">
-    <svg width="1105" height="700">
-      <Point v-for="position in positions" :key="position.index"
-        :first-value="position.start"
-        :second-value="position.end"
-        :lane="position.lane"
-      />
-    </svg>
+  <div>
+    <Field ref="field" :numbers="numbers" />
+    <VBtn @click="startProgress">Start</VBtn>
   </div>
 </template>
 
@@ -14,43 +9,37 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
-import Point from '@/components/runningField/Point.vue'
-
-const MAX_LANES = 8
+import Field from '@/components/runningField/Field.vue'
+import numbers from '@/store/numbers'
 
 @Component({
-  components: { Point },
+  components: { Field },
 })
 export default class RunningField extends Vue {
-  private numbers: number[][] = [...Array(101).keys()].map(i => [i, 10])
+  get numbers (): number[][] {
+    const res = []
 
-  get positions () {
-    const positions = []
+    for (let i = 0; i < numbers.start.length; ++i) {
+      const startNumber = numbers.start[i]
+      const endNumber = numbers.end[i] || 0
 
-    let index = 0
-    for (const [start, end] of this.numbers) {
-      const lane = 1 // (index % MAX_LANES) + 1
-      positions.push({
-        index: ++index,
-        lane,
-        start,
-        end,
-      })
+      res.push([startNumber, endNumber])
     }
 
-    return positions
+    return res
+  }
+
+  mounted () {
+    if (numbers.start.length === 0 || numbers.start.length !== numbers.end.length) {
+      this.$router.replace({
+        name: 'home',
+      })
+    }
+  }
+
+  startProgress () {
+    const field: Field = this.$refs.field as Field
+    field.startProgress()
   }
 }
 </script>
-
-<style lang="scss">
-  .running-field {
-    background-image: url('../assets/running-track.png');
-    background-size: contain;
-    background-color: #95ff25;
-    width: 1105px;
-    height: 700px;
-    margin: auto;
-    border: 1px solid black;
-  }
-</style>

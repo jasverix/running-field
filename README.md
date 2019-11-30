@@ -1,4 +1,9 @@
-# running-field
+# Dots in a running field
+
+This simple web page just accepts two lists of numbers.
+It will create dots based on the first list and on key press move
+all dots to second position from second list. It is assumed that numbers
+with same index is for the same dot.
 
 ## Project setup
 ```
