@@ -23,6 +23,11 @@ const routes = [
     name: 'fullField',
     component: () => import('../views/FullField.vue'),
   },
+  {
+    path: '/example',
+    name: 'example',
+    component: () => import('../views/Example.vue'),
+  },
 ]
 
 const router = new VueRouter({

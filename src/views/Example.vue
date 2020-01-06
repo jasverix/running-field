@@ -10,31 +10,22 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
 import Field from '@/components/runningField/Field.vue'
-import numbers from '@/store/numbers'
 
 @Component({
   components: { Field },
 })
-export default class RunningField extends Vue {
+export default class Example extends Vue {
   get numbers (): number[][] {
     const res = []
 
-    for (let i = 0; i < numbers.start.length; ++i) {
-      const startNumber = numbers.start[i]
-      const endNumber = numbers.end[i] || 0
+    for (let i = 0; i < 250; ++i) {
+      const startNumber = Math.floor(Math.random() * 99)
+      const endNumber = Math.floor(Math.random() * (100 - startNumber)) + startNumber
 
       res.push([startNumber, endNumber])
     }
 
     return res
-  }
-
-  mounted () {
-    if (numbers.start.length === 0 || numbers.start.length !== numbers.end.length) {
-      this.$router.replace({
-        name: 'home',
-      })
-    }
   }
 
   startProgress () {

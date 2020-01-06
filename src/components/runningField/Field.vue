@@ -6,6 +6,7 @@
         :second-value="position.end"
         :lane="position.lane"
         :progress="progress"
+        :random-placement="randomPlacement"
       />
     </svg>
   </div>
@@ -29,6 +30,9 @@ export default class Field extends Vue {
   @Prop({ type: Array, required: true })
   readonly numbers!: number[][]
 
+  @Prop({ type: Boolean, default: true })
+  readonly randomPlacement!: boolean
+
   get positions () {
     const positions = []
 
@@ -47,12 +51,14 @@ export default class Field extends Vue {
   }
 
   public startProgress () {
-    progress({
-      max: 1,
-      handler: v => {
-        this.progress = v
-      },
-    })
+    if (this.progress === 0) {
+      progress({
+        max: 1,
+        handler: v => {
+          this.progress = v
+        },
+      })
+    }
   }
 }
 </script>

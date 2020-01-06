@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" />
+    <Field ref="field" :numbers="numbers" :random-placement="false" />
   </div>
 </template>
 
