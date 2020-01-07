@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" :random-placement="true" />
+    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="rabbitValue" />
     <VBtn @click="startProgress">Start</VBtn>
   </div>
 </template>
@@ -27,6 +27,10 @@ export default class RunningField extends Vue {
     }
 
     return res
+  }
+
+  get rabbitValue (): number | null {
+    return numbers.rabbit
   }
 
   mounted () {

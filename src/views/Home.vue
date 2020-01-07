@@ -3,6 +3,12 @@
     <div>
       <VLayout>
         <VFlex>
+          <VLabel>Måltall</VLabel>
+          <VTextField type="number" v-model="rabbitValue" />
+        </VFlex>
+      </VLayout>
+      <VLayout>
+        <VFlex>
           <h2>Forrige uke</h2>
           <VTextarea v-model="startNumbers" rows="30" />
         </VFlex>
@@ -36,6 +42,7 @@ export default {
     return {
       startNumbers: '',
       endNumbers: '',
+      rabbitValue: 0,
     }
   },
 
@@ -45,6 +52,14 @@ export default {
     },
     endNumbers (value: string) {
       numbers.end = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
+    },
+    rabbitValue (value: string) {
+      const rabbit = parseFloat(value)
+      if (rabbit && !isNaN(rabbit)) {
+        numbers.rabbit = rabbit
+      } else {
+        numbers.rabbit = null
+      }
     },
   },
 }

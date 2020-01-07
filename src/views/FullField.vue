@@ -11,9 +11,9 @@ import { Component } from 'vue-property-decorator'
 import Field from '@/components/runningField/Field.vue'
 
 const numbers: number[][] = []
-for (const number of Array(100).keys()) {
+for (const number of Array(101).keys()) {
   for (let i = 0; i < 8; ++i) {
-    numbers.push([number + 1, number + 1])
+    numbers.push([number, number])
   }
 }
 

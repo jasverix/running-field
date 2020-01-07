@@ -45,7 +45,9 @@ export default class Point extends Vue {
 
   private color: string = '#000'
 
-  private showNumber = false
+  private showNumber: boolean = false
+
+  private thisModification: number = 0
 
   get value (): number {
     const valueRange = this.secondValue - this.firstValue
@@ -58,31 +60,11 @@ export default class Point extends Vue {
   }
 
   get xPos (): number {
-    let x = this.position.x
-
-    if (this.randomPlacement) {
-      const range = RANDOM_RANGE * 2
-      const randomPlacementUnsigned = Math.random() * range
-      const mod = randomPlacementUnsigned - RANDOM_RANGE
-
-      x += mod
-    }
-
-    return x
+    return this.position.x + this.thisModification
   }
 
   get yPos (): number {
-    let y = this.position.y
-
-    if (this.randomPlacement) {
-      const range = RANDOM_RANGE * 2
-      const randomPlacementUnsigned = Math.random() * range
-      const mod = randomPlacementUnsigned - RANDOM_RANGE
-
-      y += mod
-    }
-
-    return y
+    return this.position.y + this.thisModification
   }
 
   beforeMount () {
@@ -92,6 +74,10 @@ export default class Point extends Vue {
       const blue = Math.floor(Math.random() * 254)
 
       this.color = '#' + toHex(red) + toHex(green) + toHex(blue)
+
+      const range = RANDOM_RANGE * 2
+      const randomPlacementUnsigned = Math.random() * range
+      this.thisModification = randomPlacementUnsigned - RANDOM_RANGE
     }
   }
 }

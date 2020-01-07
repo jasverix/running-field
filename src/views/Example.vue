@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" :random-placement="true" />
+    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="79" />
     <VBtn @click="startProgress">Start</VBtn>
   </div>
 </template>

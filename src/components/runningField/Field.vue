@@ -8,6 +8,7 @@
         :progress="progress"
         :random-placement="randomPlacement"
       />
+      <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" />
     </svg>
   </div>
 </template>
@@ -18,11 +19,12 @@ import { Component, Prop } from 'vue-property-decorator'
 import { progress } from '@/utils/progress'
 
 import Point from '@/components/runningField/Point.vue'
+import Rabbit from '@/components/runningField/Rabbit.vue'
 
 const MAX_LANES = 8
 
 @Component({
-  components: { Point },
+  components: { Point, Rabbit },
 })
 export default class Field extends Vue {
   private progress = 0
@@ -32,6 +34,9 @@ export default class Field extends Vue {
 
   @Prop({ type: Boolean, default: true })
   readonly randomPlacement!: boolean
+
+  @Prop({ type: Number, default: 0 })
+  readonly rabbitValue!: number
 
   get positions () {
     const positions = []

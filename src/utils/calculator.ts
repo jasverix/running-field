@@ -107,6 +107,9 @@ function getBottomLinePosition (value: number, lane: number): Position {
 }
 
 export function calculatePosition (value: number, lane: number): Position {
+  if (value < 1) {
+    value = 1 // lowest value on this field.. (because the drawing is so)
+  }
   value = (value / 100) * 94 + 6
 
   if (value <= 28) {
