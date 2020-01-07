@@ -4,7 +4,7 @@ export interface Position {
 }
 
 function getLongLinePosition (lane: number, top: boolean): number {
-  const laneOne = top ? 84 : 601
+  const laneOne = top ? 90 : 605
   const laneSeparator = 11.3
   const laneMultiplier = (lane - 1) * (top ? -1 : 1)
 
@@ -17,7 +17,7 @@ function getSwingPercentage (value: number, invert: boolean): { xPercentage: num
   let yPercentage = percentageOfSwing
   let xPercentage = Math.abs(percentageOfSwing * 2 - 1)
   if (percentageOfSwing < 0.5) {
-    yPercentage *= (yPercentage * 2)
+    yPercentage *= (yPercentage * 1.85)
     yPercentage += (yPercentage / 7)
 
     xPercentage *= (xPercentage)
@@ -107,6 +107,8 @@ function getBottomLinePosition (value: number, lane: number): Position {
 }
 
 export function calculatePosition (value: number, lane: number): Position {
+  value = (value / 100) * 94 + 6
+
   if (value <= 28) {
     return getFirstSwingPosition(value, lane)
   }

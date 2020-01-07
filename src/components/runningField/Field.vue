@@ -65,7 +65,7 @@ export default class Field extends Vue {
 
 <style lang="scss">
   .running-field {
-    background-image: url('../../assets/running-track.png');
+    background-image: url('../../assets/running-track-2.png');
     background-size: contain;
     background-color: #95ff25;
     width: 1105px;

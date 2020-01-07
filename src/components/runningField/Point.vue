@@ -1,6 +1,6 @@
 <template>
   <g>
-    <circle r="3"
+    <circle r="4"
       stroke="black"
       stroke-width="0.5"
       :cx="xPos"
@@ -16,7 +16,7 @@ import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 import { Position, calculatePosition } from '@/utils/calculator'
 
-const RANDOM_RANGE = 1.5
+const RANDOM_RANGE = 3
 
 function toHex (num: number): string {
   const hex = num.toString(16)
