@@ -2,12 +2,14 @@
   <div>
     <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="rabbitValue" />
     <VBtn @click="startProgress">Start</VBtn>
+    <VBtn @click="goFullscreen">Fullscreen</VBtn>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
+import Mousetrap from 'mousetrap'
 
 import Field from '@/components/runningField/Field.vue'
 import numbers from '@/store/numbers'
@@ -38,12 +40,24 @@ export default class RunningField extends Vue {
       this.$router.replace({
         name: 'home',
       })
+      return
     }
+
+    Mousetrap.bind('space', this.startProgress)
+  }
+
+  destroyed () {
+    Mousetrap.unbind('space')
   }
 
   startProgress () {
     const field: Field = this.$refs.field as Field
     field.startProgress()
+  }
+
+  goFullscreen () {
+    const field: Field = this.$refs.field as Field
+    field.goFullscreen()
   }
 }
 </script>

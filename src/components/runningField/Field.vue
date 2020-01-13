@@ -1,6 +1,6 @@
 <template>
   <div class="running-field">
-    <svg width="1105" height="700">
+    <svg ref="canvas" width="1105" height="700">
       <Point v-for="position in positions" :key="position.index"
         :first-value="position.start"
         :second-value="position.end"
@@ -64,6 +64,11 @@ export default class Field extends Vue {
         },
       })
     }
+  }
+
+  public goFullscreen () {
+    // const canvas = this.$refs.canvas as SVGElement
+    this.$el.requestFullscreen()
   }
 }
 </script>
