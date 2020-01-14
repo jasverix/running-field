@@ -14,7 +14,8 @@
           :progress="progress"
           :random-placement="randomPlacement"
         />
-        <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" />
+        <Rabbit v-if="avgValue > 0" :value="avgValue" color="662222" />
+        <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" color="226622" />
       </svg>
     </div>
   </div>
@@ -41,6 +42,9 @@ export default class Field extends Vue {
 
   @Prop({ type: Boolean, default: true })
   readonly randomPlacement!: boolean
+
+  @Prop({ type: Number, default: 0 })
+  readonly avgValue!: number
 
   @Prop({ type: Number, default: 0 })
   readonly rabbitValue!: number
@@ -96,6 +100,7 @@ export default class Field extends Vue {
     height: 100vh;
     border: 1px solid black;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   .bg-video {

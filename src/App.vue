@@ -1,7 +1,9 @@
 <template>
   <VApp>
     <VContent>
-      <RouterView />
+      <div class="wrap">
+        <RouterView />
+      </div>
     </VContent>
   </VApp>
 </template>
@@ -17,3 +19,19 @@ export default Vue.extend({
   }),
 })
 </script>
+
+<style>
+  body {
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+  ::-webkit-scrollbar {
+    display:none;
+  }
+
+  .wrap {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+</style>

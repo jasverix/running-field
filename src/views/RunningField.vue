@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="rabbitValue" />
-    <VBtn @click="startProgress">Start</VBtn>
-    <VBtn @click="goFullscreen">Fullscreen</VBtn>
+    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="rabbitValue" :avg-value="avgValue" />
   </div>
 </template>
 
@@ -33,6 +31,10 @@ export default class RunningField extends Vue {
 
   get rabbitValue (): number | null {
     return numbers.rabbit
+  }
+
+  get avgValue (): number | null {
+    return numbers.avg
   }
 
   mounted () {

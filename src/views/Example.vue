@@ -1,7 +1,7 @@
 import Mousetrap from "mousetrap"
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="79" />
+    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="74" :avg-value="63" />
   </div>
 </template>
 

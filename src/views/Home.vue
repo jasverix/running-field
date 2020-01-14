@@ -9,6 +9,13 @@
       </VLayout>
       <VLayout>
         <VFlex>
+          <VLabel>Gjennomsnitt</VLabel>
+          <VTextField type="number" v-model="avgValue" />
+        </VFlex>
+      </VLayout>
+
+      <VLayout>
+        <VFlex>
           <h2>Forrige uke</h2>
           <VTextarea v-model="startNumbers" rows="30" />
         </VFlex>
@@ -43,6 +50,7 @@ export default {
       startNumbers: '',
       endNumbers: '',
       rabbitValue: 0,
+      avgValue: 0,
     }
   },
 
@@ -59,6 +67,14 @@ export default {
         numbers.rabbit = rabbit
       } else {
         numbers.rabbit = null
+      }
+    },
+    avgValue (value: string) {
+      const avg = parseFloat(value)
+      if (avg && !isNaN(avg)) {
+        numbers.avg = avg
+      } else {
+        numbers.avg = null
       }
     },
   },
