@@ -1,15 +1,22 @@
 <template>
   <div class="running-field">
-    <svg ref="canvas" width="1105" height="700">
-      <Point v-for="position in positions" :key="position.index"
-        :first-value="position.start"
-        :second-value="position.end"
-        :lane="position.lane"
-        :progress="progress"
-        :random-placement="randomPlacement"
-      />
-      <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" />
-    </svg>
+    <div class="bg-video">
+      <video ref="video" muted>
+        <source src="@/assets/bg-movie.mp4"/>
+      </video>
+    </div>
+    <div class="field">
+      <svg ref="canvas" width="100vw" height="100vh" viewBox="0 0 1105 700">
+        <Point v-for="position in positions" :key="position.index"
+          :first-value="position.start"
+          :second-value="position.end"
+          :lane="position.lane"
+          :progress="progress"
+          :random-placement="randomPlacement"
+        />
+        <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" />
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -57,6 +64,7 @@ export default class Field extends Vue {
 
   public startProgress () {
     if (this.progress === 0) {
+      this.playVideo()
       progress({
         max: 1,
         handler: v => {
@@ -70,17 +78,45 @@ export default class Field extends Vue {
     // const canvas = this.$refs.canvas as SVGElement
     this.$el.requestFullscreen()
   }
+
+  public playVideo () {
+    try {
+      const video = this.$refs.video as HTMLVideoElement
+      video.play()
+    } catch (e) {
+    }
+  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .running-field {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid black;
+    box-sizing: border-box;
+  }
+
+  .bg-video {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+
+    video {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+
+  .field {
     background-image: url('../../assets/running-track-2.png');
     background-size: contain;
-    background-color: #95ff25;
-    width: 1105px;
-    height: 700px;
-    margin: auto;
-    border: 1px solid black;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 </style>

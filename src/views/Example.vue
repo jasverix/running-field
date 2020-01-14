@@ -1,13 +1,14 @@
+import Mousetrap from "mousetrap"
 <template>
   <div>
     <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="79" />
-    <VBtn @click="startProgress">Start</VBtn>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
+import Mousetrap from 'mousetrap'
 
 import Field from '@/components/runningField/Field.vue'
 
@@ -26,6 +27,14 @@ export default class Example extends Vue {
     }
 
     return res
+  }
+
+  mounted () {
+    Mousetrap.bind('space', this.startProgress)
+  }
+
+  destroyed () {
+    Mousetrap.unbind('space')
   }
 
   startProgress () {
