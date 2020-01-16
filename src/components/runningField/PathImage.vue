@@ -1,9 +1,6 @@
 <template>
   <g>
-    <path
-      stroke="white" stroke-width="2"
-      fill="brown"
-      fill-opacity="1" fill-rule="evenodd"
+    <path class="field"
       :d="pathDescriptor"
     />
 
@@ -18,6 +15,10 @@
       color="ffffff" text-color="000000"
       small-text
     />
+
+    <Rabbit :value="99.5" color="ffffff" no-text />
+    <Rabbit :value="99.6" color="000000" no-text />
+    <Rabbit :value="99.7" color="ffffff" no-text />
   </g>
 </template>
 
@@ -47,8 +48,8 @@ export default class PathImage extends Vue {
       'M 1025 595',
       'C 1115 550, 1240 95, 805 1', // right outer swing
       'L 270 1',
-      'C -96 35, -110 610, 270 698', // left outer swing
-      'L 1080 698',
+      'C -96 35, -110 610, 270 696', // left outer swing
+      'L 1080 696',
       'L 1080 595',
       'L 1035 595',
       'L 805 595',
@@ -78,3 +79,13 @@ export default class PathImage extends Vue {
   }
 }
 </script>
+
+<style scoped>
+  .field {
+    fill: #a4971e;
+    fill-rule: evenodd;
+
+    stroke: white;
+    stroke-width: 2;
+  }
+</style>

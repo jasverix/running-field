@@ -88,8 +88,8 @@ export default class Field extends Vue {
         handler: v => {
           this.progress = v
         },
-        intervalTime: 15,
-        steps: 200,
+        intervalTime: 1,
+        steps: 175,
       })
     }
   }

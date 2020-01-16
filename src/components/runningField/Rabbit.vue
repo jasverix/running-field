@@ -5,12 +5,12 @@
       :x1="positionA.x" :y1="positionA.y"
       :x2="positionB.x" :y2="positionB.y"
     />
-    <line
+    <line v-if="!noText"
       :stroke="darkColor" stroke-width="1"
       :x1="positionA.x" :y1="positionA.y"
       :x2="textPosition.x" :y2="textPosition.y"
     />
-    <text
+    <text v-if="!noText"
       :x="textPosition.x" :y="textPosition.y"
       :font-size="smallText ? 30 : 50"
       text-anchor="middle"
@@ -50,6 +50,9 @@ export default class Rabbit extends Vue {
 
   @Prop({ type: Boolean })
   readonly smallText!: boolean
+
+  @Prop({ type: Boolean })
+  readonly noText!: boolean
 
   get textColorCalc (): string {
     if (this.textColor) {
