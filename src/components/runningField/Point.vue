@@ -69,9 +69,12 @@ export default class Point extends Vue {
 
   beforeMount () {
     if (this.randomPlacement) {
-      const red = Math.floor(Math.random() * 254)
-      const green = Math.floor(Math.random() * 254)
-      const blue = Math.floor(Math.random() * 254)
+      const COLOR_MAX = 254 / 2
+      const COLOR_ADJ = 50
+
+      const red = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
+      const green = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
+      const blue = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
 
       this.color = '#' + toHex(red) + toHex(green) + toHex(blue)
 

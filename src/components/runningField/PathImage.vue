@@ -7,18 +7,18 @@
     <line
       :x1="startLinePosition.start.x" :y1="startLinePosition.start.y"
       :x2="startLinePosition.end.x" :y2="startLinePosition.end.y"
-      stroke="white" stroke-width="12" stroke-dasharray="10"
+      stroke="black" stroke-width="12" stroke-dasharray="10"
     />
 
     <Rabbit v-for="lineValue in lines" :key="`line-${lineValue}`"
       :value="lineValue"
-      color="ffffff" text-color="000000"
+      color="000000" text-color="000000"
       small-text
     />
 
-    <Rabbit :value="99.5" color="ffffff" no-text />
-    <Rabbit :value="99.6" color="000000" no-text />
-    <Rabbit :value="99.7" color="ffffff" no-text />
+    <Rabbit :value="99.5" color="000000" no-text />
+    <Rabbit :value="99.6" color="ff7777" no-text />
+    <Rabbit :value="99.7" color="000000" no-text />
   </g>
 </template>
 
@@ -82,10 +82,11 @@ export default class PathImage extends Vue {
 
 <style scoped>
   .field {
-    fill: #a4971e;
+    fill: white;
     fill-rule: evenodd;
+    fill-opacity: 0.6;
 
-    stroke: white;
-    stroke-width: 2;
+    stroke: black;
+    stroke-width: 0;
   }
 </style>
