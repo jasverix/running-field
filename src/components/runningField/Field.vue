@@ -78,6 +78,10 @@ export default class Field extends Vue {
     }
   }
 
+  public reset () {
+    this.progress = 0
+  }
+
   public goFullscreen () {
     // const canvas = this.$refs.canvas as SVGElement
     this.$el.requestFullscreen()

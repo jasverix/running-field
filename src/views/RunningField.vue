@@ -46,15 +46,24 @@ export default class RunningField extends Vue {
     }
 
     Mousetrap.bind('space', this.startProgress)
+    Mousetrap.bind('esc', this.reset)
+    Mousetrap.bind('shift + f', this.goFullscreen)
   }
 
   destroyed () {
     Mousetrap.unbind('space')
+    Mousetrap.unbind('esc')
+    Mousetrap.unbind('shift + f')
   }
 
   startProgress () {
     const field: Field = this.$refs.field as Field
     field.startProgress()
+  }
+
+  reset () {
+    const field: Field = this.$refs.field as Field
+    field.reset()
   }
 
   goFullscreen () {
