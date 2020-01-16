@@ -12,9 +12,9 @@
     />
     <text
       :x="textPosition.x" :y="textPosition.y"
-      font-size="50"
+      :font-size="smallText ? 30 : 50"
       text-anchor="middle"
-      :fill="darkColor"
+      :fill="textColorCalc"
       :stroke="lightColor" stroke-width="1"
     >
       {{ value }} %
@@ -45,12 +45,25 @@ export default class Rabbit extends Vue {
   @Prop({ type: String, default: 'black' })
   readonly color!: string
 
+  @Prop({ type: String })
+  readonly textColor!: string
+
+  @Prop({ type: Boolean })
+  readonly smallText!: boolean
+
+  get textColorCalc (): string {
+    if (this.textColor) {
+      return '#' + this.textColor
+    }
+    return this.darkColor
+  }
+
   get darkColor (): string {
     return '#' + this.color
   }
 
   get lightColor (): string {
-    return '#' + lightenDarkenColor(this.color, 75)
+    return '#' + lightenDarkenColor(this.textColor || this.color, 90)
   }
 
   get positionA (): Position {

@@ -7,6 +7,7 @@
     </div>
     <div class="field">
       <svg ref="canvas" width="100vw" height="100vh" viewBox="0 0 1105 700">
+        <PathImage />
         <Point v-for="position in positions" :key="position.index"
           :first-value="position.start"
           :second-value="position.end"
@@ -28,11 +29,12 @@ import { progress } from '@/utils/progress'
 
 import Point from '@/components/runningField/Point.vue'
 import Rabbit from '@/components/runningField/Rabbit.vue'
+import PathImage from './PathImage.vue'
 
 const MAX_LANES = 8
 
 @Component({
-  components: { Point, Rabbit },
+  components: { Point, Rabbit, PathImage },
 })
 export default class Field extends Vue {
   private progress = 0
@@ -66,6 +68,18 @@ export default class Field extends Vue {
     return positions
   }
 
+  public mounted () {
+    const video = this.$refs.video as HTMLVideoElement
+    if (typeof video.loop === 'boolean') {
+      video.loop = true
+    }
+
+    video.addEventListener('ended', () => {
+      video.currentTime = 0
+      video.play()
+    })
+  }
+
   public startProgress () {
     if (this.progress === 0) {
       this.playVideo()
@@ -74,6 +88,8 @@ export default class Field extends Vue {
         handler: v => {
           this.progress = v
         },
+        intervalTime: 15,
+        steps: 200,
       })
     }
   }
@@ -121,9 +137,6 @@ export default class Field extends Vue {
   }
 
   .field {
-    background-image: url('../../assets/running-track-2.png');
-    background-size: contain;
-    background-position: center;
     position: absolute;
     top: 0;
     left: 0;
