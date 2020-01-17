@@ -46,13 +46,7 @@ import numbers from '@/store/numbers'
 function parseNumbers (value: string): number[] {
   return value.split('\n')
     .map((line: string, index: number) => {
-      const num = parseFloat(line.trim())
-
-      if (isNaN(num)) {
-        console.log('could not parse index ', index, ': ', line, ' as number')
-      }
-
-      return num
+      return parseFloat(line.trim())
     })
     .filter(num => !isNaN(num) && num !== null && num !== void 0)
 }

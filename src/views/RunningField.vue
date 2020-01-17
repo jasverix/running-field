@@ -54,12 +54,11 @@ export default class RunningField extends Vue {
 
   mounted () {
     if (numbers.start.length === 0 || numbers.start.length !== numbers.end.length) {
-      if (numbers.start.length === 0) {
-        console.log('No numbers in start position!')
-      } else {
-        console.log(`There is ${numbers.start.length} numbers at start position and ${numbers.end.length} at end position!`)
-      }
-
+      // if (numbers.start.length === 0) {
+      //   console.log('No numbers in start position!')
+      // } else {
+      //   console.log(`There is ${numbers.start.length} numbers at start position and ${numbers.end.length} at end position!`)
+      // }
       this.$router.replace({
         name: 'home',
       })
