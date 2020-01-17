@@ -3,20 +3,14 @@
     <div>
       <VLayout>
         <VFlex>
-          <VLabel>Måltall</VLabel>
-          <VTextField type="number" v-model="rabbitValue" />
-        </VFlex>
-      </VLayout>
-      <VLayout>
-        <VFlex>
-          <VLabel>Gjennomsnitt</VLabel>
-          <VTextField type="number" v-model="avgValue" />
-        </VFlex>
-      </VLayout>
-
-      <VLayout>
-        <VFlex>
           <h2>Forrige uke</h2>
+          <VLabel>Måltall</VLabel>
+          <VTextField type="number" v-model="rabbitValueStart" />
+
+          <VLabel>Gjennomsnitt</VLabel>
+          <VTextField type="number" v-model="avgValueStart" />
+
+          <VLabel>Numre</VLabel>
           <VTextarea v-model="startNumbers" rows="30" />
         </VFlex>
 
@@ -26,6 +20,13 @@
 
         <VFlex>
           <h2>Denne uka</h2>
+          <VLabel>Måltall</VLabel>
+          <VTextField type="number" v-model="rabbitValueEnd" />
+
+          <VLabel>Gjennomsnitt</VLabel>
+          <VTextField type="number" v-model="avgValueEnd" />
+
+          <VLabel>Numre</VLabel>
           <VTextarea v-model="endNumbers" rows="30" />
         </VFlex>
       </VLayout>
@@ -49,8 +50,10 @@ export default {
     return {
       startNumbers: '',
       endNumbers: '',
-      rabbitValue: 0,
-      avgValue: 0,
+      rabbitValueStart: 0,
+      rabbitValueEnd: 0,
+      avgValueStart: 0,
+      avgValueEnd: 0,
     }
   },
 
@@ -61,20 +64,36 @@ export default {
     endNumbers (value: string) {
       numbers.end = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
     },
-    rabbitValue (value: string) {
+    rabbitValueStart (value: string) {
       const rabbit = parseFloat(value)
       if (rabbit && !isNaN(rabbit)) {
-        numbers.rabbit = rabbit
+        numbers.rabbitStart = rabbit
       } else {
-        numbers.rabbit = null
+        numbers.rabbitStart = null
       }
     },
-    avgValue (value: string) {
+    avgValueStart (value: string) {
       const avg = parseFloat(value)
       if (avg && !isNaN(avg)) {
-        numbers.avg = avg
+        numbers.avgStart = avg
       } else {
-        numbers.avg = null
+        numbers.avgStart = null
+      }
+    },
+    rabbitValueEnd (value: string) {
+      const rabbit = parseFloat(value)
+      if (rabbit && !isNaN(rabbit)) {
+        numbers.rabbitEnd = rabbit
+      } else {
+        numbers.rabbitEnd = null
+      }
+    },
+    avgValueEnd (value: string) {
+      const avg = parseFloat(value)
+      if (avg && !isNaN(avg)) {
+        numbers.avgEnd = avg
+      } else {
+        numbers.avgEnd = null
       }
     },
   },

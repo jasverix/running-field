@@ -17,7 +17,7 @@
       :fill="textColorCalc"
       :stroke="lightColor" stroke-width="1"
     >
-      {{ value }} %
+      {{ valueText }} %
     </text>
   </g>
 </template>
@@ -37,6 +37,30 @@ function lightenDarkenColor (col: string, amt: number) {
   return newColor.toString(16)
 }
 
+function strTrimRight (sString: string, chars: string | undefined): string {
+  if (sString === '') {
+    return ''
+  }
+
+  if (chars === void 0) {
+    chars = ' '
+  }
+
+  while (chars.indexOf(sString.substring(sString.length - 1, sString.length)) !== -1) {
+    if (sString === '') {
+      return ''
+    }
+
+    sString = sString.substring(0, sString.length - 1)
+  }
+
+  if (sString === '') {
+    return ''
+  }
+
+  return sString
+}
+
 @Component
 export default class Rabbit extends Vue {
   @Prop({ type: Number, required: true })
@@ -53,6 +77,10 @@ export default class Rabbit extends Vue {
 
   @Prop({ type: Boolean })
   readonly noText!: boolean
+
+  get valueText (): string {
+    return strTrimRight(strTrimRight(this.value.toFixed(1), '0'), '.')
+  }
 
   get textColorCalc (): string {
     if (this.textColor) {

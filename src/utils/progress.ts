@@ -20,9 +20,15 @@ export async function progress ({ min = 0, max, handler, steps = 100, intervalTi
   let internalValue = 0
   const step = valueRange / steps
 
-  while (internalValue <= valueRange) {
+  while (internalValue < valueRange) {
     await sleep(intervalTime)
     internalValue += step
-    handler(internalValue + min)
+
+    const thisValue = Math.round((internalValue + min) * 100) / 100
+    if (thisValue > max) {
+      handler(max)
+      return
+    }
+    handler(thisValue)
   }
 }

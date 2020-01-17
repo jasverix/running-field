@@ -3,15 +3,19 @@ import Vue from 'vue'
 interface Numbers {
   start: number[]
   end: number[]
-  rabbit: number | null
-  avg: number | null
+  rabbitStart: number | null
+  rabbitEnd: number | null
+  avgStart: number | null
+  avgEnd: number | null
 }
 
 const numbers: Numbers = Vue.observable({
   start: [],
   end: [],
-  rabbit: null,
-  avg: null,
+  rabbitStart: null,
+  rabbitEnd: null,
+  avgStart: null,
+  avgEnd: null,
 })
 
 export default numbers

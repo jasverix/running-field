@@ -46,10 +46,28 @@ export default class Field extends Vue {
   readonly randomPlacement!: boolean
 
   @Prop({ type: Number, default: 0 })
-  readonly avgValue!: number
+  readonly avgValueStart!: number
 
   @Prop({ type: Number, default: 0 })
-  readonly rabbitValue!: number
+  readonly rabbitValueStart!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly avgValueEnd!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly rabbitValueEnd!: number
+
+  get rabbitValue (): number {
+    const valueRange = this.rabbitValueEnd - this.rabbitValueStart
+
+    return this.rabbitValueStart + (valueRange * this.progress)
+  }
+
+  get avgValue (): number {
+    const valueRange = this.avgValueEnd - this.avgValueStart
+
+    return this.avgValueStart + (valueRange * this.progress)
+  }
 
   get positions () {
     const positions = []
@@ -88,8 +106,8 @@ export default class Field extends Vue {
         handler: v => {
           this.progress = v
         },
-        intervalTime: 1,
-        steps: 175,
+        intervalTime: 15,
+        steps: 200,
       })
     }
   }

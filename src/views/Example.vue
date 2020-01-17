@@ -1,7 +1,11 @@
 import Mousetrap from "mousetrap"
 <template>
   <div>
-    <Field ref="field" :numbers="numbers" :random-placement="true" :rabbit-value="74" :avg-value="63" />
+    <Field ref="field"
+      :numbers="numbers" :random-placement="true"
+      :rabbit-value-start="74" :rabbit-value-end="76"
+      :avg-value-start="63" :avg-value-end="64"
+    />
   </div>
 </template>
 
@@ -31,15 +35,22 @@ export default class Example extends Vue {
 
   mounted () {
     Mousetrap.bind('space', this.startProgress)
+    Mousetrap.bind('esc', this.reset)
   }
 
   destroyed () {
     Mousetrap.unbind('space')
+    Mousetrap.unbind('esc')
   }
 
   startProgress () {
     const field: Field = this.$refs.field as Field
     field.startProgress()
+  }
+
+  reset () {
+    const field: Field = this.$refs.field as Field
+    field.reset()
   }
 }
 </script>
