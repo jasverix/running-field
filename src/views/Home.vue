@@ -43,6 +43,20 @@
 <script lang="ts">
 import numbers from '@/store/numbers'
 
+function parseNumbers (value: string): number[] {
+  return value.split('\n')
+    .map((line: string, index: number) => {
+      const num = parseFloat(line.trim())
+
+      if (isNaN(num)) {
+        console.log('could not parse index ', index, ': ', line, ' as number')
+      }
+
+      return num
+    })
+    .filter(num => !isNaN(num) && num !== null && num !== void 0)
+}
+
 export default {
   name: 'home',
 
@@ -59,10 +73,10 @@ export default {
 
   watch: {
     startNumbers (value: string) {
-      numbers.start = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
+      numbers.start = parseNumbers(value)
     },
     endNumbers (value: string) {
-      numbers.end = value.split('\n').map((line: string) => parseInt(line.trim())).filter(num => !isNaN(num) && num)
+      numbers.end = parseNumbers(value)
     },
     rabbitValueStart (value: string) {
       const rabbit = parseFloat(value)

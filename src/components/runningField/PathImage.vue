@@ -82,7 +82,7 @@ export default class PathImage extends Vue {
 
 <style scoped>
   .field {
-    fill: white;
+    fill: #fff8da;
     fill-rule: evenodd;
     fill-opacity: 0.6;
 
