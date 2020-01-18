@@ -41,8 +41,6 @@ function fetchData (): Numbers {
     }
   }
 
-  console.log('fetched', { numbers })
-
   return numbers as Numbers
 }
 
@@ -54,8 +52,6 @@ const storeData = debounce((numbers: Numbers) => {
   for (const key of ['rabbitStart', 'rabbitEnd', 'avgStart', 'avgEnd']) {
     localStorage.setItem(`rf.numbers.${key}`, dataToStore[key])
   }
-
-  console.log('stored', { numbers })
 }, 500)
 
 const Watcher = Vue.extend({
