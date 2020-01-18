@@ -54,11 +54,6 @@ export default class RunningField extends Vue {
 
   mounted () {
     if (numbers.start.length === 0 || numbers.start.length !== numbers.end.length) {
-      // if (numbers.start.length === 0) {
-      //   console.log('No numbers in start position!')
-      // } else {
-      //   console.log(`There is ${numbers.start.length} numbers at start position and ${numbers.end.length} at end position!`)
-      // }
       this.$router.replace({
         name: 'home',
       })
@@ -68,6 +63,8 @@ export default class RunningField extends Vue {
     Mousetrap.bind('space', this.startProgress)
     Mousetrap.bind('esc', this.reset)
     Mousetrap.bind('shift + f', this.goFullscreen)
+
+    window.onbeforeunload = () => 'Do not close!'
   }
 
   destroyed () {

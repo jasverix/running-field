@@ -46,7 +46,7 @@ import numbers from '@/store/numbers'
 function parseNumbers (value: string): number[] {
   return value.split('\n')
     .map((line: string, index: number) => {
-      return parseFloat(line.trim())
+      return parseFloat(line.trim().replace(',', '.'))
     })
     .filter(num => !isNaN(num) && num !== null && num !== void 0)
 }
