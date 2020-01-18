@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <div>
+    <div style="height: 90vh">
+      <VLayout justify-center style="margin-bottom: 20px">
+        <VBtn @click="newWeek">← Ny uke</VBtn>
+      </VLayout>
+
       <VLayout>
         <VFlex>
           <h2>Forrige uke</h2>
@@ -33,7 +37,7 @@
 
       <hr style="margin-bottom: 10px">
 
-      <VBtn @click="$router.push({ name: 'runningField' })">
+      <VBtn @click="start">
         Start
       </VBtn>
     </div>
@@ -41,70 +45,97 @@
 </template>
 
 <script lang="ts">
-import numbers from '@/store/numbers'
+import Vue from 'vue'
+import { Component, Watch } from 'vue-property-decorator'
+import numbers, { parseNumbers, newWeek } from '@/store/numbers'
+import Mousetrap from 'mousetrap'
 
-function parseNumbers (value: string): number[] {
-  return value.split('\n')
-    .map((line: string, index: number) => {
-      return parseFloat(line.trim().replace(',', '.'))
-    })
-    .filter(num => !isNaN(num) && num !== null && num !== void 0)
-}
+@Component
+export default class Home extends Vue {
+  public startNumbers: string = ''
+  public endNumbers: string = ''
+  public rabbitValueStart: string = ''
+  public rabbitValueEnd: string = ''
+  public avgValueStart: string = ''
+  public avgValueEnd: string = ''
 
-export default {
-  name: 'home',
+  @Watch('startNumbers')
+  onStartNumbersChanged (value: string) {
+    numbers.start = parseNumbers(value)
+  }
 
-  data () {
-    return {
-      startNumbers: '',
-      endNumbers: '',
-      rabbitValueStart: 0,
-      rabbitValueEnd: 0,
-      avgValueStart: 0,
-      avgValueEnd: 0,
+  @Watch('endNumbers')
+  onEndNumbersChanged (value: string) {
+    numbers.end = parseNumbers(value)
+  }
+
+  @Watch('rabbitValueStart')
+  onRabbitValueStartChanged (value: string) {
+    const rabbit = parseFloat(value)
+    if (rabbit && !isNaN(rabbit)) {
+      numbers.rabbitStart = rabbit
+    } else {
+      numbers.rabbitStart = null
     }
-  },
+  }
 
-  watch: {
-    startNumbers (value: string) {
-      numbers.start = parseNumbers(value)
-    },
-    endNumbers (value: string) {
-      numbers.end = parseNumbers(value)
-    },
-    rabbitValueStart (value: string) {
-      const rabbit = parseFloat(value)
-      if (rabbit && !isNaN(rabbit)) {
-        numbers.rabbitStart = rabbit
-      } else {
-        numbers.rabbitStart = null
-      }
-    },
-    avgValueStart (value: string) {
-      const avg = parseFloat(value)
-      if (avg && !isNaN(avg)) {
-        numbers.avgStart = avg
-      } else {
-        numbers.avgStart = null
-      }
-    },
-    rabbitValueEnd (value: string) {
-      const rabbit = parseFloat(value)
-      if (rabbit && !isNaN(rabbit)) {
-        numbers.rabbitEnd = rabbit
-      } else {
-        numbers.rabbitEnd = null
-      }
-    },
-    avgValueEnd (value: string) {
-      const avg = parseFloat(value)
-      if (avg && !isNaN(avg)) {
-        numbers.avgEnd = avg
-      } else {
-        numbers.avgEnd = null
-      }
-    },
-  },
+  @Watch('avgValueStart')
+  onAvgValueStartChanged (value: string) {
+    const avg = parseFloat(value)
+    if (avg && !isNaN(avg)) {
+      numbers.avgStart = avg
+    } else {
+      numbers.avgStart = null
+    }
+  }
+
+  @Watch('rabbitValueEnd')
+  onRabbitValueEndChanged (value: string) {
+    const rabbit = parseFloat(value)
+    if (rabbit && !isNaN(rabbit)) {
+      numbers.rabbitEnd = rabbit
+    } else {
+      numbers.rabbitEnd = null
+    }
+  }
+
+  @Watch('avgValueEnd')
+  onAvgValueEndChanged (value: string) {
+    const avg = parseFloat(value)
+    if (avg && !isNaN(avg)) {
+      numbers.avgEnd = avg
+    } else {
+      numbers.avgEnd = null
+    }
+  }
+
+  mounted () {
+    const self = this as any
+    Mousetrap.bind('return', () => self.start())
+    this.loadData()
+  }
+
+  beforeDestroy (): void {
+    Mousetrap.unbind('return')
+  }
+
+  start () {
+    this.$router.push({ name: 'runningField' })
+  }
+
+  loadData () {
+    this.startNumbers = numbers.start.join('\n')
+    this.endNumbers = numbers.end.join('\n')
+    this.rabbitValueStart = (numbers.rabbitStart || 0).toString()
+    this.rabbitValueEnd = (numbers.rabbitEnd || 0).toString()
+    this.avgValueStart = (numbers.avgStart || 0).toString()
+    this.avgValueEnd = (numbers.avgEnd || 0).toString()
+  }
+
+  newWeek () {
+    newWeek()
+    this.loadData()
+  }
 }
 </script>
 

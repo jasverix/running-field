@@ -107,7 +107,7 @@ export default class Field extends Vue {
           this.progress = v
         },
         intervalTime: 20,
-        steps: 200,
+        steps: 500,
       })
     }
   }

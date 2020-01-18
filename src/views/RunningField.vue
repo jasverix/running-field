@@ -62,15 +62,15 @@ export default class RunningField extends Vue {
 
     Mousetrap.bind('space', this.startProgress)
     Mousetrap.bind('esc', this.reset)
-    Mousetrap.bind('shift + f', this.goFullscreen)
-
-    window.onbeforeunload = () => 'Do not close!'
+    Mousetrap.bind('f', this.goFullscreen)
+    Mousetrap.bind('backspace', () => this.$router.push({ name: 'home' }))
   }
 
   destroyed () {
     Mousetrap.unbind('space')
     Mousetrap.unbind('esc')
-    Mousetrap.unbind('shift + f')
+    Mousetrap.unbind('f')
+    Mousetrap.unbind('backspace')
   }
 
   startProgress () {
