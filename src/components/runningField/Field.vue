@@ -100,7 +100,7 @@ export default class Field extends Vue {
   }
 
   public startProgress () {
-    if (this.progresser === null) {
+    if (this.progresser === null || !this.progresser.isRunning()) {
       this.playVideo()
       this.progresser = progress({
         max: 1,

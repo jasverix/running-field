@@ -16,6 +16,7 @@ export class Progresser {
   private readonly options: ProgressOptions
   private running = false
   private stepRunning = false
+
   constructor (options: ProgressOptions) {
     this.options = options
   }
@@ -39,17 +40,27 @@ export class Progresser {
       const thisValue = Math.round((internalValue + min) * 100) / 100
       if (thisValue > max) {
         handler(max)
+        this.running = false
+        this.stepRunning = false
         return
       }
       handler(thisValue)
     }
+
+    this.running = false
+    this.stepRunning = false
   }
 
-  async cancel () {
+  async cancel (): Promise<void> {
+    if (!this.running) return
     this.running = false
     while (this.stepRunning) {
       await sleep(1)
     }
+  }
+
+  isRunning (): boolean {
+    return this.running || this.stepRunning
   }
 }
 
