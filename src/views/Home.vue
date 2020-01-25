@@ -14,8 +14,12 @@
           <VLabel>Gjennomsnitt</VLabel>
           <VTextField type="number" v-model="avgValueStart" />
 
-          <VLabel>Numre</VLabel>
-          <VTextarea v-model="startNumbers" rows="30" />
+          <div style="height: 45vh; overflow: hidden">
+            <VLabel>Numre</VLabel>
+            <div>
+              <textarea v-model="startNumbers" style="height: 40vh; width: 100%;" />
+            </div>
+          </div>
         </VFlex>
 
         <VFlex style="border-right: 1px solid; margin-right: 70px">
@@ -30,8 +34,12 @@
           <VLabel>Gjennomsnitt</VLabel>
           <VTextField type="number" v-model="avgValueEnd" />
 
-          <VLabel>Numre</VLabel>
-          <VTextarea v-model="endNumbers" rows="30" />
+          <div style="height: 45vh; overflow: hidden">
+            <VLabel>Numre</VLabel>
+            <div>
+              <textarea v-model="endNumbers" style="height: 40vh; width: 100%;" />
+            </div>
+          </div>
         </VFlex>
       </VLayout>
 

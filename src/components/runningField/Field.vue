@@ -25,7 +25,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
-import { progress } from '@/utils/progress'
+import { progress, Progresser } from '@/utils/progress'
 
 import Point from '@/components/runningField/Point.vue'
 import Rabbit from '@/components/runningField/Rabbit.vue'
@@ -38,6 +38,7 @@ const MAX_LANES = 8
 })
 export default class Field extends Vue {
   private progress = 0
+  private progresser: Progresser | null = null
 
   @Prop({ type: Array, required: true })
   readonly numbers!: number[][]
@@ -99,9 +100,9 @@ export default class Field extends Vue {
   }
 
   public startProgress () {
-    if (this.progress === 0) {
+    if (this.progresser === null) {
       this.playVideo()
-      progress({
+      this.progresser = progress({
         max: 1,
         handler: v => {
           this.progress = v
@@ -112,7 +113,11 @@ export default class Field extends Vue {
     }
   }
 
-  public reset () {
+  public async reset () {
+    if (this.progresser) {
+      await this.progresser.cancel()
+    }
+    this.progresser = null
     this.progress = 0
   }
 
