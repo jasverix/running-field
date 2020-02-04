@@ -24,11 +24,16 @@ import numbers from '@/store/numbers'
 })
 export default class RunningField extends Vue {
   get numbers (): number[][] {
-    const res = []
+    const res: number[][] = []
 
-    for (let i = 0; i < numbers.start.length; ++i) {
-      const startNumber = numbers.start[i]
-      const endNumber = numbers.end[i] || 0
+    for (let i = 0; i < numbers.end.length; ++i) {
+      // may be additional numbers on end array
+      const startNumber = i < numbers.start.length ? numbers.start[i] : numbers.end[i]
+      const endNumber = numbers.end[i]
+
+      if (startNumber === null || endNumber === null) {
+        continue
+      }
 
       res.push([startNumber, endNumber])
     }
@@ -53,7 +58,7 @@ export default class RunningField extends Vue {
   }
 
   mounted () {
-    if (numbers.start.length === 0 || numbers.start.length !== numbers.end.length) {
+    if (numbers.start.length === 0 || numbers.start.length > numbers.end.length) {
       this.$router.replace({
         name: 'home',
       })

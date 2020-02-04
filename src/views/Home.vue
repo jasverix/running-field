@@ -156,8 +156,8 @@ export default class Home extends Vue {
   }
 
   loadData () {
-    this.startNumbers = numbers.start.join('\n')
-    this.endNumbers = numbers.end.join('\n')
+    this.startNumbers = numbers.start.map(num => num === null ? '-' : num.toString()).join('\n')
+    this.endNumbers = numbers.end.map(num => num === null ? '-' : num.toString()).join('\n')
     this.rabbitValueStart = (numbers.rabbitStart || 0).toString()
     this.rabbitValueEnd = (numbers.rabbitEnd || 0).toString()
     this.avgValueStart = (numbers.avgStart || 0).toString()
