@@ -1,54 +1,78 @@
 <template>
   <div class="home">
-    <div style="height: 90vh">
-      <VLayout justify-center style="margin-bottom: 20px">
-        <VBtn @click="newWeek">← Ny uke</VBtn>
-      </VLayout>
+    <VLayout>
+      <VFlex>
+        <div style="height: 90vh" class="control-wrapper">
+          <VLayout justify-center style="margin-bottom: 20px">
+            <VBtn @click="newWeek">← Ny uke</VBtn>
+          </VLayout>
 
-      <VLayout>
-        <VFlex>
-          <h2>Forrige uke</h2>
-          <VLabel>Måltall</VLabel>
-          <VTextField type="number" v-model="rabbitValueStart" />
+          <VLayout>
+            <VFlex>
+              <h2>Forrige uke</h2>
+              <VLabel>Måltall</VLabel>
+              <VTextField type="number" v-model="rabbitValueStart" />
 
-          <VLabel>Gjennomsnitt</VLabel>
-          <VTextField type="number" v-model="avgValueStart" />
+              <VLabel>Gjennomsnitt</VLabel>
+              <VTextField type="number" v-model="avgValueStart" />
 
-          <div style="height: 45vh; overflow: hidden">
-            <VLabel>Numre</VLabel>
-            <div>
-              <textarea v-model="startNumbers" style="height: 40vh; width: 100%;" />
-            </div>
-          </div>
-        </VFlex>
+              <div style="height: 45vh; overflow: hidden">
+                <VLabel>Numre</VLabel>
+                <div>
+                  <textarea v-model="startNumbers" style="height: 40vh; width: 100%;" />
+                </div>
+              </div>
+            </VFlex>
 
-        <VFlex style="border-right: 1px solid; margin-right: 70px">
-          &nbsp; &nbsp;
-        </VFlex>
+            <VFlex style="border-right: 1px solid; margin-right: 70px">
+              &nbsp; &nbsp;
+            </VFlex>
 
-        <VFlex>
-          <h2>Denne uka</h2>
-          <VLabel>Måltall</VLabel>
-          <VTextField type="number" v-model="rabbitValueEnd" />
+            <VFlex>
+              <h2>Denne uka</h2>
+              <VLabel>Måltall</VLabel>
+              <VTextField type="number" v-model="rabbitValueEnd" />
 
-          <VLabel>Gjennomsnitt</VLabel>
-          <VTextField type="number" v-model="avgValueEnd" />
+              <VLabel>Gjennomsnitt</VLabel>
+              <VTextField type="number" v-model="avgValueEnd" />
 
-          <div style="height: 45vh; overflow: hidden">
-            <VLabel>Numre</VLabel>
-            <div>
-              <textarea v-model="endNumbers" style="height: 40vh; width: 100%;" />
-            </div>
-          </div>
-        </VFlex>
-      </VLayout>
+              <div style="height: 45vh; overflow: hidden">
+                <VLabel>Numre</VLabel>
+                <div>
+                  <textarea v-model="endNumbers" style="height: 40vh; width: 100%;" />
+                </div>
+              </div>
+            </VFlex>
+          </VLayout>
 
-      <hr style="margin-bottom: 10px">
+          <hr style="margin-bottom: 10px">
 
-      <VBtn @click="start">
-        Start
-      </VBtn>
-    </div>
+          <VBtn @click="start">
+            Start
+          </VBtn>
+        </div>
+      </VFlex>
+
+      <VFlex>
+        <div style="height: 90vh" class="user-manual">
+          <h2>Bruksanvisning</h2>
+
+          <p>
+            I dette vinduet legger du inn tallene. Til venstre er start-posisjon og til høyre ny posisjon.
+            Hver uke legger du inn nye tall. Knappen "Ny uke" vil flytte tallene fra høyre til venstre side.
+            <strong>Merk at du da mister all informasjon på venstre side!</strong>
+          </p>
+
+          <h3>Inne på banen - hotkeys</h3>
+          <ul>
+            <li>space: start animasjon</li>
+            <li>q: avslutt animasjon / resett posisjoner</li>
+            <li>f: full-skjerm</li>
+            <li>backspace: tilbake hit</li>
+          </ul>
+        </div>
+      </VFlex>
+    </VLayout>
   </div>
 </template>
 
@@ -150,14 +174,21 @@ export default class Home extends Vue {
 <style lang="scss">
   .home {
     background-color: #1d540f;
-    height: 1000px;
-    padding-top: 20px;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .control-wrapper {
+      width:50vw;
+    }
+
+    .user-manual {
+      width: 30vw;
+    }
 
     > div {
       background-color: rgba(255, 255, 255, 0.85);
       box-sizing: border-box;
-      width: 800px;
-      margin: auto;
       padding: 20px;
     }
   }

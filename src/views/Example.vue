@@ -35,12 +35,12 @@ export default class Example extends Vue {
 
   mounted () {
     Mousetrap.bind('space', this.startProgress)
-    Mousetrap.bind('esc', this.reset)
+    Mousetrap.bind('q', this.reset)
   }
 
   destroyed () {
     Mousetrap.unbind('space')
-    Mousetrap.unbind('esc')
+    Mousetrap.unbind('q')
   }
 
   startProgress () {
