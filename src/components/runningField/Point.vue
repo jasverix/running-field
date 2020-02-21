@@ -50,9 +50,20 @@ export default class Point extends Vue {
   private thisModification: number = 0
 
   get value (): number {
-    const valueRange = this.secondValue - this.firstValue
+    let firstValue = this.firstValue
+    let secondValue = this.secondValue
 
-    return this.firstValue + (valueRange * this.progress)
+    // if point is going backwards (due to changing goals) just leave the point at the ending point
+    if (secondValue < firstValue) {
+      return secondValue
+    }
+
+    const valueRange = secondValue - firstValue
+    if (valueRange < 0.1) {
+      return secondValue
+    }
+
+    return firstValue + (valueRange * this.progress)
   }
 
   get position (): Position {
