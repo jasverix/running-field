@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@types/mousetrap": "^1.6.3",
+    "@types/seedrandom": "^2.4.28",
     "core-js": "^3.3.2",
     "mousetrap": "^1.6.3",
+    "seedrandom": "^3.0.5",
     "vue": "^2.6.10",
     "vue-class-component": "^7.1.0",
     "vue-property-decorator": "^8.3.0",

@@ -15,8 +15,11 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 import { Position, calculatePosition } from '@/utils/calculator'
+import { Random } from '@/utils/random'
 
 const RANDOM_RANGE = 3
+
+const rng = new Random('running-field-points')
 
 function toHex (num: number): string {
   const hex = num.toString(16)
@@ -83,14 +86,14 @@ export default class Point extends Vue {
       const COLOR_MAX = 254 / 2
       const COLOR_ADJ = 50
 
-      const red = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
-      const green = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
-      const blue = Math.floor(Math.random() * COLOR_MAX) + COLOR_ADJ
+      const red = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
+      const green = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
+      const blue = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
 
       this.color = '#' + toHex(red) + toHex(green) + toHex(blue)
 
       const range = RANDOM_RANGE * 2
-      const randomPlacementUnsigned = Math.random() * range
+      const randomPlacementUnsigned = rng.random() * range
       this.thisModification = randomPlacementUnsigned - RANDOM_RANGE
     }
   }

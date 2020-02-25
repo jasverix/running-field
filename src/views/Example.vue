@@ -13,6 +13,7 @@ import Mousetrap from "mousetrap"
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import Mousetrap from 'mousetrap'
+import { Random } from '@/utils/random'
 
 import Field from '@/components/runningField/Field.vue'
 
@@ -20,12 +21,22 @@ import Field from '@/components/runningField/Field.vue'
   components: { Field },
 })
 export default class Example extends Vue {
+  private _rng: Random | null = null
+  get rng (): Random {
+    if (this._rng) return this._rng
+
+    const seed = String(this.$route.query.seed || (Math.random() * 250).toString(16))
+    this._rng = new Random(seed)
+
+    return this._rng
+  }
+
   get numbers (): number[][] {
     const res = []
 
     for (let i = 0; i < 250; ++i) {
-      const startNumber = Math.floor(Math.random() * 99)
-      const endNumber = Math.floor(Math.random() * (100 - startNumber)) + startNumber
+      const startNumber = Math.floor(this.rng.random() * 99)
+      const endNumber = Math.floor(this.rng.random() * (100 - startNumber)) + startNumber
 
       res.push([startNumber, endNumber])
     }
