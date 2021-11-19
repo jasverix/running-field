@@ -10,6 +10,21 @@ interface Numbers {
   avgEnd: number | null
 }
 
+function trim (str: string, chars: string): string {
+  let start = 0
+  let end = str.length
+
+  while (start < end && chars.indexOf(str[start]) >= 0) {
+    ++start
+  }
+
+  while (end > start && chars.indexOf(str[end - 1]) >= 0) {
+    --end
+  }
+
+  return (start > 0 || end < str.length) ? str.substring(start, end) : str
+}
+
 export function parseNumbers (value: string): (number | null)[] {
   return value.split('\n')
     .map((line: string, index: number) => {
@@ -17,7 +32,7 @@ export function parseNumbers (value: string): (number | null)[] {
         return null
       }
 
-      return parseFloat(line.trim().replace(',', '.'))
+      return parseFloat(trim(line, '% .;,').replace(',', '.'))
     })
     .filter(num => num === null || (num !== void 0 && !isNaN(num)))
 }
