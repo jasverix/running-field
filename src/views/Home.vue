@@ -79,7 +79,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Watch } from 'vue-property-decorator'
-import numbers, { parseNumbers, newWeek } from '@/store/numbers'
+import numbers, { parseNumbers, newWeek, personToString } from '@/store/numbers'
 import Mousetrap from 'mousetrap'
 
 @Component
@@ -156,8 +156,8 @@ export default class Home extends Vue {
   }
 
   loadData () {
-    this.startNumbers = numbers.start.map(num => num === null ? '-' : num.toString()).join('\n')
-    this.endNumbers = numbers.end.map(num => num === null ? '-' : num.toString()).join('\n')
+    this.startNumbers = numbers.start.map(personToString).join('\n')
+    this.endNumbers = numbers.end.map(personToString).join('\n')
     this.rabbitValueStart = (numbers.rabbitStart || 0).toString()
     this.rabbitValueEnd = (numbers.rabbitEnd || 0).toString()
     this.avgValueStart = (numbers.avgStart || 0).toString()

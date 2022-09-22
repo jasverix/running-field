@@ -79,12 +79,16 @@ function fetchData (): Numbers {
   return numbers as Numbers
 }
 
+export function personToString (person: Person | null): string {
+  return person === null ? '-' : (`${person.gender}\t${person.number.toString()}`)
+}
+
 const storeData = debounce((numbers: Numbers) => {
   const dataToStore = numbers as { [k: string]: any }
   for (const key of ['start', 'end']) {
     localStorage.setItem(`rf.numbers.${key}`, (dataToStore[key] as (Person | null)[])
-      .map(num => num === null ? '-' : (`${num.gender}\t${num.number.toString()}`))
-      .join('\n')
+      .map(personToString)
+      .join('\n'),
     )
   }
   for (const key of ['rabbitStart', 'rabbitEnd', 'avgStart', 'avgEnd']) {
