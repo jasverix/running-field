@@ -1,11 +1,11 @@
 <template>
   <g>
     <circle r="4"
-      stroke="black"
-      stroke-width="0.5"
-      :cx="xPos"
-      :cy="yPos"
-      :fill="color"
+            stroke="black"
+            stroke-width="0.5"
+            :cx="xPos"
+            :cy="yPos"
+            :fill="color"
     />
     <text v-if="showNumber" :x="xPos - 0.5" :y="yPos + 0.5">{{ value }}</text>
   </g>
@@ -16,6 +16,7 @@ import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 import { Position, calculatePosition } from '@/utils/calculator'
 import { Random } from '@/utils/random'
+import { Gender } from '@/store/numbers'
 
 const RANDOM_RANGE = 3
 
@@ -45,6 +46,9 @@ export default class Point extends Vue {
 
   @Prop({ type: Boolean, default: true })
   readonly randomPlacement!: boolean
+
+  @Prop({ type: String, required: true })
+  readonly gender!: Gender
 
   private color: string = '#000'
 
@@ -83,12 +87,22 @@ export default class Point extends Vue {
 
   beforeMount () {
     if (this.randomPlacement) {
-      const COLOR_MAX = 254 / 2
-      const COLOR_ADJ = 50
+      let red = 0
+      let green = 0
+      let blue = 0
 
-      const red = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
-      const green = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
-      const blue = Math.floor(rng.random() * COLOR_MAX) + COLOR_ADJ
+      switch (this.gender) {
+        case 'g':
+          red = 50
+          blue = 250
+          green = Math.floor(rng.random() * (254 / 2)) + 50
+          break
+
+        case 'j':
+          red = 250
+          blue = 50
+          green = Math.floor(rng.random() * 50) + 25
+      }
 
       this.color = '#' + toHex(red) + toHex(green) + toHex(blue)
 

@@ -17,14 +17,14 @@ import { Component } from 'vue-property-decorator'
 import Mousetrap from 'mousetrap'
 
 import Field from '@/components/runningField/Field.vue'
-import numbers from '@/store/numbers'
+import numbers, { Person } from '@/store/numbers'
 
 @Component({
   components: { Field },
 })
 export default class RunningField extends Vue {
-  get numbers (): number[][] {
-    const res: number[][] = []
+  get numbers (): Person[][] {
+    const res: Person[][] = []
 
     for (let i = 0; i < numbers.end.length; ++i) {
       // may be additional numbers on end array

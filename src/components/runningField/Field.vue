@@ -12,6 +12,7 @@
           :first-value="position.start"
           :second-value="position.end"
           :lane="position.lane"
+          :gender="position.gender"
           :progress="progress"
           :random-placement="randomPlacement"
         />
@@ -30,8 +31,17 @@ import { progress, Progresser } from '@/utils/progress'
 import Point from '@/components/runningField/Point.vue'
 import Rabbit from '@/components/runningField/Rabbit.vue'
 import PathImage from './PathImage.vue'
+import { Gender, Person } from '@/store/numbers'
 
 const MAX_LANES = 8
+
+type Positions = {
+  index: number
+  lane: number
+  gender: Gender
+  start: number
+  end: number
+}
 
 @Component({
   components: { Point, Rabbit, PathImage },
@@ -41,7 +51,7 @@ export default class Field extends Vue {
   private progresser: Progresser | null = null
 
   @Prop({ type: Array, required: true })
-  readonly numbers!: number[][]
+  readonly numbers!: Person[][]
 
   @Prop({ type: Boolean, default: true })
   readonly randomPlacement!: boolean
@@ -71,7 +81,7 @@ export default class Field extends Vue {
   }
 
   get positions () {
-    const positions = []
+    const positions: Positions[] = []
 
     let index = 0
     for (const [start, end] of this.numbers) {
@@ -79,8 +89,9 @@ export default class Field extends Vue {
       positions.push({
         index: ++index,
         lane,
-        start,
-        end,
+        gender: start.gender,
+        start: start.number,
+        end: end.number,
       })
     }
 

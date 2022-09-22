@@ -2,15 +2,23 @@ import Vue from 'vue'
 import { debounce } from '@/utils/debounce'
 
 interface Numbers {
-  start: (number | null)[]
-  end: (number | null)[]
+  start: (Person | null)[]
+  end: (Person | null)[]
   rabbitStart: number | null
   rabbitEnd: number | null
   avgStart: number | null
   avgEnd: number | null
 }
 
-function trim (str: string, chars: string): string {
+export type Gender = 'g' | 'j'
+
+export interface Person {
+  number: number
+  gender: Gender
+}
+
+function trim (str: string | undefined, chars: string): string {
+  if (str === undefined) return ''
   let start = 0
   let end = str.length
 
@@ -25,16 +33,26 @@ function trim (str: string, chars: string): string {
   return (start > 0 || end < str.length) ? str.substring(start, end) : str
 }
 
-export function parseNumbers (value: string): (number | null)[] {
-  return value.split('\n')
+export function parseNumbers (value: string): (Person | null)[] {
+  return value.trim().split('\n')
     .map((line: string, index: number) => {
       if (line === '-') {
         return null
       }
 
-      return parseFloat(trim(line, '% .;,').replace(',', '.'))
+      const [genderKey, numberKey] = line.trim().split('\t')
+      const gender = genderKey as Gender
+      let number: number = parseFloat(trim(numberKey, '% .;,').replace(',', '.'))
+
+      console.log({ gender, number, numberKey, line })
+
+      if (isNaN(number)) return null
+      const person: Person = {
+        gender,
+        number,
+      }
+      return person
     })
-    .filter(num => num === null || (num !== void 0 && !isNaN(num)))
 }
 
 function fetchData (): Numbers {
@@ -66,7 +84,10 @@ function fetchData (): Numbers {
 const storeData = debounce((numbers: Numbers) => {
   const dataToStore = numbers as { [k: string]: any }
   for (const key of ['start', 'end']) {
-    localStorage.setItem(`rf.numbers.${key}`, (dataToStore[key] as number[]).map(num => num === null ? '-' : num.toString()).join('\n'))
+    localStorage.setItem(`rf.numbers.${key}`, (dataToStore[key] as (Person | null)[])
+      .map(num => num === null ? '-' : (`${num.gender}\t${num.number.toString()}`))
+      .join('\n')
+    )
   }
   for (const key of ['rabbitStart', 'rabbitEnd', 'avgStart', 'avgEnd']) {
     localStorage.setItem(`rf.numbers.${key}`, dataToStore[key])
