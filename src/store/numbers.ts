@@ -44,8 +44,6 @@ export function parseNumbers (value: string): (Person | null)[] {
       const gender = genderKey as Gender
       let number: number = parseFloat(trim(numberKey, '% .;,').replace(',', '.'))
 
-      console.log({ gender, number, numberKey, line })
-
       if (isNaN(number)) return null
       const person: Person = {
         gender,
