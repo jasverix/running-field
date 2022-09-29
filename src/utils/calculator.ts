@@ -12,7 +12,7 @@ function getLongLinePosition (lane: number, top: boolean): number {
 }
 
 function getSwingPercentage (value: number, invert: boolean): { xPercentage: number, yPercentage: number } {
-  let percentageOfSwing = value / 28
+  const percentageOfSwing = value / 28
 
   let yPercentage = percentageOfSwing
   let xPercentage = Math.abs(percentageOfSwing * 2 - 1)

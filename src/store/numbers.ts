@@ -10,7 +10,7 @@ interface Numbers {
   avgEnd: number | null
 }
 
-export type Gender = 'g' | 'j'
+export type Gender = 'g' | 'j' | 'e'
 
 export interface Person {
   number: number
@@ -33,16 +33,31 @@ function trim (str: string | undefined, chars: string): string {
   return (start > 0 || end < str.length) ? str.substring(start, end) : str
 }
 
-export function parseNumbers (value: string): (Person | null)[] {
+export function parseNumbers (value: string, referenceNumbers?: (Person | null)[]): (Person | null)[] {
   return value.trim().split('\n')
     .map((line: string, index: number) => {
-      if (line === '-') {
-        return null
+      if (line === '-') return null
+
+      const lineParts = line.trim().split('\t')
+      let genderKey: string = 'e'
+      let numberKey: string = '0'
+
+      switch (lineParts.length) {
+        case 1:
+          numberKey = lineParts[0]
+          break
+
+        case 2:
+          genderKey = lineParts[0] as Gender
+          numberKey = lineParts[1]
+          break
       }
 
-      const [genderKey, numberKey] = line.trim().split('\t')
-      const gender = genderKey as Gender
-      let number: number = parseFloat(trim(numberKey, '% .;,').replace(',', '.'))
+      let gender: Gender = genderKey as Gender
+      if (referenceNumbers) {
+        if (referenceNumbers[index]) gender = referenceNumbers[index]?.gender as Gender
+      }
+      const number: number = parseFloat(trim(numberKey, '% .;,').replace(',', '.'))
 
       if (isNaN(number)) return null
       const person: Person = {
@@ -63,12 +78,11 @@ function fetchData (): Numbers {
     avgEnd: null,
   }
 
-  for (const key of ['start', 'end']) {
-    const storedValue = localStorage.getItem(`rf.numbers.${key}`)
-    if (storedValue) {
-      numbers[key] = parseNumbers(storedValue)
-    }
-  }
+  const startNumbers = localStorage.getItem('rf.numbers.start')
+  const endNumbers = localStorage.getItem('rf.numbers.start')
+  if (startNumbers) numbers.start = parseNumbers(startNumbers)
+  if (endNumbers) numbers.end = parseNumbers(endNumbers, numbers.start)
+
   for (const key of ['rabbitStart', 'rabbitEnd', 'avgStart', 'avgEnd']) {
     const storedValue = localStorage.getItem(`rf.numbers.${key}`)
     if (storedValue) {

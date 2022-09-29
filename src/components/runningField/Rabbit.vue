@@ -38,26 +38,13 @@ function lightenDarkenColor (col: string, amt: number) {
 }
 
 function strTrimRight (sString: string, chars: string | undefined): string {
-  if (sString === '') {
-    return ''
-  }
-
-  if (chars === void 0) {
-    chars = ' '
-  }
+  if (sString === '') return ''
+  if (chars === undefined) chars = ' '
 
   while (chars.indexOf(sString.substring(sString.length - 1, sString.length)) !== -1) {
-    if (sString === '') {
-      return ''
-    }
-
+    if (sString === '') return ''
     sString = sString.substring(0, sString.length - 1)
   }
-
-  if (sString === '') {
-    return ''
-  }
-
   return sString
 }
 

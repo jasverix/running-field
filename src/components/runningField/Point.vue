@@ -57,8 +57,8 @@ export default class Point extends Vue {
   private thisModification: number = 0
 
   get value (): number {
-    let firstValue = this.firstValue
-    let secondValue = this.secondValue
+    const firstValue = this.firstValue
+    const secondValue = this.secondValue
 
     // if point is going backwards (due to changing goals) just leave the point at the ending point
     if (secondValue < firstValue) {
@@ -102,6 +102,13 @@ export default class Point extends Vue {
           red = 250
           blue = 50
           green = Math.floor(rng.random() * 50) + 25
+          break
+
+        case 'e':
+          red = Math.floor(rng.random() * 50) + 25
+          green = red
+          blue = red
+          break
       }
 
       this.color = '#' + toHex(red) + toHex(green) + toHex(blue)

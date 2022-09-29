@@ -28,15 +28,6 @@ import { Component } from 'vue-property-decorator'
 import { Position, calculatePosition } from '@/utils/calculator'
 import Rabbit from '@/components/runningField/Rabbit.vue'
 
-interface LinePosition {
-  start: Position
-  end: Position
-}
-
-interface LinePositions {
-  [index: number]: LinePosition
-}
-
 @Component({
   components: {
     Rabbit,
