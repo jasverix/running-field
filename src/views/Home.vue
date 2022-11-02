@@ -14,7 +14,7 @@
               <VTextField type="number" v-model="rabbitValueStart" />
 
               <VLabel>Gjennomsnitt</VLabel>
-              <VTextField type="number" v-model="avgValueStart" />
+              <VTextField type="number" v-model="avgValueStart" readonly />
 
               <div style="height: 45vh; overflow: hidden">
                 <VLabel>Numre</VLabel>
@@ -34,7 +34,7 @@
               <VTextField type="number" v-model="rabbitValueEnd" />
 
               <VLabel>Gjennomsnitt</VLabel>
-              <VTextField type="number" v-model="avgValueEnd" />
+              <VTextField type="number" v-model="avgValueEnd" readonly />
 
               <div style="height: 45vh; overflow: hidden">
                 <VLabel>Numre</VLabel>
@@ -88,17 +88,19 @@ export default class Home extends Vue {
   public endNumbers: string = ''
   public rabbitValueStart: string = ''
   public rabbitValueEnd: string = ''
-  public avgValueStart: string = ''
-  public avgValueEnd: string = ''
+  public avgValueStart: number | null = 0
+  public avgValueEnd: number | null = 0
 
   @Watch('startNumbers')
   onStartNumbersChanged (value: string) {
     numbers.start = parseNumbers(value)
+    this.avgValueStart = numbers.avgStart
   }
 
   @Watch('endNumbers')
   onEndNumbersChanged (value: string) {
-    numbers.end = parseNumbers(value)
+    numbers.end = parseNumbers(value, numbers.start)
+    this.avgValueEnd = numbers.avgEnd
   }
 
   @Watch('rabbitValueStart')
@@ -111,16 +113,6 @@ export default class Home extends Vue {
     }
   }
 
-  @Watch('avgValueStart')
-  onAvgValueStartChanged (value: string) {
-    const avg = parseFloat(value)
-    if (avg && !isNaN(avg)) {
-      numbers.avgStart = avg
-    } else {
-      numbers.avgStart = null
-    }
-  }
-
   @Watch('rabbitValueEnd')
   onRabbitValueEndChanged (value: string) {
     const rabbit = parseFloat(value)
@@ -128,16 +120,6 @@ export default class Home extends Vue {
       numbers.rabbitEnd = rabbit
     } else {
       numbers.rabbitEnd = null
-    }
-  }
-
-  @Watch('avgValueEnd')
-  onAvgValueEndChanged (value: string) {
-    const avg = parseFloat(value)
-    if (avg && !isNaN(avg)) {
-      numbers.avgEnd = avg
-    } else {
-      numbers.avgEnd = null
     }
   }
 
@@ -160,8 +142,8 @@ export default class Home extends Vue {
     this.endNumbers = numbers.end.map(personToString).join('\n')
     this.rabbitValueStart = (numbers.rabbitStart || 0).toString()
     this.rabbitValueEnd = (numbers.rabbitEnd || 0).toString()
-    this.avgValueStart = (numbers.avgStart || 0).toString()
-    this.avgValueEnd = (numbers.avgEnd || 0).toString()
+    this.avgValueStart = (numbers.avgStart || 0)
+    this.avgValueEnd = (numbers.avgEnd || 0)
   }
 
   newWeek () {
@@ -172,24 +154,24 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
-  .home {
-    background-color: #1d540f;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
+.home {
+  background-color: #1d540f;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 
-    .control-wrapper {
-      width:50vw;
-    }
-
-    .user-manual {
-      width: 30vw;
-    }
-
-    > div {
-      background-color: rgba(255, 255, 255, 0.85);
-      box-sizing: border-box;
-      padding: 20px;
-    }
+  .control-wrapper {
+    width: 50vw;
   }
+
+  .user-manual {
+    width: 30vw;
+  }
+
+  > div {
+    background-color: rgba(255, 255, 255, 0.85);
+    box-sizing: border-box;
+    padding: 20px;
+  }
+}
 </style>

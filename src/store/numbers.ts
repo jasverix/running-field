@@ -1,13 +1,35 @@
 import Vue from 'vue'
 import { debounce } from '@/utils/debounce'
 
-interface Numbers {
+interface NumbersInput {
   start: (Person | null)[]
   end: (Person | null)[]
   rabbitStart: number | null
   rabbitEnd: number | null
-  avgStart: number | null
-  avgEnd: number | null
+}
+
+class Numbers {
+  public start: (Person | null)[]
+  public end: (Person | null)[]
+  public rabbitStart: number | null
+  public rabbitEnd: number | null
+
+  constructor (input: NumbersInput) {
+    this.start = input.start
+    this.end = input.end
+    this.rabbitStart = input.rabbitStart
+    this.rabbitEnd = input.rabbitEnd
+  }
+
+  get avgStart (): number | null {
+    const numbers = this.start.filter(n => n !== null).map(n => n?.number ?? 0)
+    return numbers.reduce((a, b) => a + b, 0) / numbers.length
+  }
+
+  get avgEnd (): number | null {
+    const numbers = this.end.filter(n => n !== null).map(n => n?.number ?? 0)
+    return numbers.reduce((a, b) => a + b, 0) / numbers.length
+  }
 }
 
 export type Gender = 'g' | 'j' | 'e'
@@ -69,28 +91,26 @@ export function parseNumbers (value: string, referenceNumbers?: (Person | null)[
 }
 
 function fetchData (): Numbers {
-  const numbers: { [k: string]: any } = {
+  const numbers: NumbersInput = {
     start: [],
     end: [],
     rabbitStart: null,
     rabbitEnd: null,
-    avgStart: null,
-    avgEnd: null,
   }
 
   const startNumbers = localStorage.getItem('rf.numbers.start')
-  const endNumbers = localStorage.getItem('rf.numbers.start')
+  const endNumbers = localStorage.getItem('rf.numbers.end')
   if (startNumbers) numbers.start = parseNumbers(startNumbers)
   if (endNumbers) numbers.end = parseNumbers(endNumbers, numbers.start)
 
   for (const key of ['rabbitStart', 'rabbitEnd', 'avgStart', 'avgEnd']) {
     const storedValue = localStorage.getItem(`rf.numbers.${key}`)
     if (storedValue) {
-      numbers[key] = parseFloat(storedValue)
+      (numbers as any)[key] = parseFloat(storedValue)
     }
   }
 
-  return numbers as Numbers
+  return new Numbers(numbers)
 }
 
 export function personToString (person: Person | null): string {
@@ -130,7 +150,6 @@ export default numbers
 
 export function newWeek (): void {
   numbers.rabbitStart = numbers.rabbitEnd
-  numbers.avgStart = numbers.avgEnd
   numbers.start = numbers.end
 
   numbers.end = []

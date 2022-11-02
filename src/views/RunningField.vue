@@ -59,6 +59,10 @@ export default class RunningField extends Vue {
 
   mounted () {
     if (numbers.start.length === 0 || numbers.start.length > numbers.end.length) {
+      console.warn('Mismatch between starting numbers and ending numbers', {
+        startLength: numbers.start.length,
+        endLength: numbers.end.length,
+      })
       this.$router.replace({
         name: 'home',
       })
