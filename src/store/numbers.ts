@@ -21,14 +21,54 @@ class Numbers {
     this.rabbitEnd = input.rabbitEnd
   }
 
-  get avgStart (): number | null {
+  get avgStart (): number {
     const numbers = this.start.filter(n => n !== null).map(n => n?.number ?? 0)
     return numbers.reduce((a, b) => a + b, 0) / numbers.length
   }
 
-  get avgEnd (): number | null {
+  get avgEnd (): number {
     const numbers = this.end.filter(n => n !== null).map(n => n?.number ?? 0)
     return numbers.reduce((a, b) => a + b, 0) / numbers.length
+  }
+
+  get tempStart (): number {
+    return (this.start.filter(p => (p?.number ?? 0) > (this.rabbitStart ?? 0)).length / this.start.length)
+  }
+
+  get tempEnd (): number {
+    return (this.end.filter(p => (p?.number ?? 0) > (this.rabbitStart ?? 0)).length / this.end.length)
+  }
+
+  get girlsStart (): Person[] {
+    return this.start.filter(p => p?.gender === 'j') as Person[]
+  }
+
+  get girlsEnd (): Person[] {
+    return this.end.filter(p => p?.gender === 'j') as Person[]
+  }
+
+  get boysStart (): Person[] {
+    return this.start.filter(p => p?.gender === 'g') as Person[]
+  }
+
+  get boysEnd (): Person[] {
+    return this.end.filter(p => p?.gender === 'g') as Person[]
+  }
+
+  get girlsTempStart (): number {
+    return (this.girlsStart.filter(p => (p.number ?? 0) > (this.rabbitStart ?? 0)).length / this.girlsStart.length)
+  }
+
+  get girlsTempEnd (): number {
+    return (this.girlsEnd.filter(p => (p?.number ?? 0) > (this.rabbitStart ?? 0)).length / this.girlsEnd.length)
+  }
+
+  get boysTempStart (): number {
+    return (this.boysStart.filter(p => (p?.number ?? 0) > (this.rabbitStart ?? 0)).length / this.boysStart.length)
+  }
+
+  get boysTempEnd (): number {
+    return (this.boysEnd.filter(p => (p?.number ?? 0) > (this.rabbitStart ?? 0)).length / this.boysEnd.length)
   }
 }
 

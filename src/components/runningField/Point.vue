@@ -1,11 +1,11 @@
 <template>
   <g>
     <circle r="4"
-            stroke="black"
-            stroke-width="0.5"
-            :cx="xPos"
-            :cy="yPos"
-            :fill="color"
+      stroke="black"
+      stroke-width="0.5"
+      :cx="xPos"
+      :cy="yPos"
+      :fill="color"
     />
     <text v-if="showNumber" :x="xPos - 0.5" :y="yPos + 0.5">{{ value }}</text>
   </g>

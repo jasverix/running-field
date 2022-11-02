@@ -7,6 +7,12 @@
       :rabbit-value-end="rabbitValueEnd"
       :avg-value-start="avgValueStart"
       :avg-value-end="avgValueEnd"
+      :temp-start="tempStart"
+      :temp-end="tempEnd"
+      :girls-temp-start="girlsTempStart"
+      :girls-temp-end="girlsTempEnd"
+      :boys-temp-start="boysTempStart"
+      :boys-temp-end="boysTempEnd"
     />
   </div>
 </template>
@@ -55,6 +61,30 @@ export default class RunningField extends Vue {
 
   get avgValueEnd (): number | null {
     return numbers.avgEnd
+  }
+
+  get girlsTempStart (): number {
+    return numbers.girlsTempStart
+  }
+
+  get girlsTempEnd (): number {
+    return numbers.girlsTempEnd
+  }
+
+  get boysTempStart (): number {
+    return numbers.boysTempStart
+  }
+
+  get boysTempEnd (): number {
+    return numbers.boysTempEnd
+  }
+
+  get tempStart (): number {
+    return numbers.tempStart
+  }
+
+  get tempEnd (): number {
+    return numbers.tempEnd
   }
 
   mounted () {

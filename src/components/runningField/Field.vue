@@ -18,6 +18,11 @@
         />
         <Rabbit v-if="avgValue > 0" :value="avgValue" color="662222" />
         <Rabbit v-if="rabbitValue > 0" :value="rabbitValue" color="226622" />
+        <template v-if="showTemperature">
+          <Temperature :value="temp" color="black" :x-pos="550" :y-pos="230" />
+          <Temperature :value="girlsTemp" color="red" :x-pos="400" :y-pos="400" />
+          <Temperature :value="boysTemp" color="blue" :x-pos="710" :y-pos="400" />
+        </template>
       </svg>
     </div>
   </div>
@@ -28,8 +33,9 @@ import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 import { progress, Progresser } from '@/utils/progress'
 
-import Point from '@/components/runningField/Point.vue'
-import Rabbit from '@/components/runningField/Rabbit.vue'
+import Point from './Point.vue'
+import Rabbit from './Rabbit.vue'
+import Temperature from './Temperature.vue'
 import PathImage from './PathImage.vue'
 import { Gender, Person } from '@/store/numbers'
 
@@ -43,8 +49,9 @@ type Positions = {
   end: number
 }
 
+// noinspection SuspiciousTypeOfGuard
 @Component({
-  components: { Point, Rabbit, PathImage },
+  components: { Temperature, Point, Rabbit, PathImage },
 })
 export default class Field extends Vue {
   private progress = 0
@@ -68,21 +75,54 @@ export default class Field extends Vue {
   @Prop({ type: Number, default: 0 })
   readonly rabbitValueEnd!: number
 
+  @Prop({ type: Boolean, default: true })
+  readonly showTemperature!: boolean
+
+  @Prop({ type: Number, default: 0 })
+  readonly tempStart!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly tempEnd!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly girlsTempStart!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly girlsTempEnd!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly boysTempStart!: number
+
+  @Prop({ type: Number, default: 0 })
+  readonly boysTempEnd!: number
+
   get rabbitValue (): number {
     const valueRange = this.rabbitValueEnd - this.rabbitValueStart
-
     return this.rabbitValueStart + (valueRange * this.progress)
   }
 
   get avgValue (): number {
     const valueRange = this.avgValueEnd - this.avgValueStart
-
     return this.avgValueStart + (valueRange * this.progress)
+  }
+
+  get temp (): number {
+    const valueRange = this.tempEnd - this.tempStart
+    return this.tempStart + (valueRange * this.progress)
+  }
+
+  get girlsTemp (): number {
+    const valueRange = this.girlsTempEnd - this.girlsTempStart
+    return this.girlsTempStart + (valueRange * this.progress)
+  }
+
+  get boysTemp (): number {
+    const valueRange = this.boysTempEnd - this.boysTempStart
+    return this.boysTempStart + (valueRange * this.progress)
   }
 
   get positions () {
     const positions: Positions[] = []
-
     let index = 0
     for (const [start, end] of this.numbers) {
       const lane = (index % MAX_LANES) + 1
