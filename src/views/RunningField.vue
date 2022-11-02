@@ -13,6 +13,7 @@
       :girls-temp-end="girlsTempEnd"
       :boys-temp-start="boysTempStart"
       :boys-temp-end="boysTempEnd"
+      :show-temperature="showTemperature"
     />
   </div>
 </template>
@@ -85,6 +86,10 @@ export default class RunningField extends Vue {
 
   get tempEnd (): number {
     return numbers.tempEnd
+  }
+
+  get showTemperature (): boolean {
+    return localStorage.getItem('showTemperature') !== 'false'
   }
 
   mounted () {

@@ -70,6 +70,12 @@
             <li>f: full-skjerm</li>
             <li>backspace: tilbake hit</li>
           </ul>
+
+          <div style="margin-top:10px;">
+            <input type="checkbox" v-model="showTemperature" id="showTemperature">
+            <span> &nbsp; </span>
+            <label for="showTemperature">Vis temperatur</label>
+          </div>
         </div>
       </VFlex>
     </VLayout>
@@ -90,6 +96,7 @@ export default class Home extends Vue {
   public rabbitValueEnd: string = ''
   public avgValueStart: number | null = 0
   public avgValueEnd: number | null = 0
+  public showTemperature: boolean = true
 
   @Watch('startNumbers')
   onStartNumbersChanged (value: string) {
@@ -123,6 +130,11 @@ export default class Home extends Vue {
     }
   }
 
+  @Watch('showTemperature')
+  onshowTemperatureChanged (value: boolean) {
+    localStorage.setItem('showTemperature', value ? 'true' : 'false')
+  }
+
   mounted () {
     const self = this as any
     Mousetrap.bind('return', () => self.start())
@@ -144,6 +156,7 @@ export default class Home extends Vue {
     this.rabbitValueEnd = (numbers.rabbitEnd || 0).toString()
     this.avgValueStart = (numbers.avgStart || 0)
     this.avgValueEnd = (numbers.avgEnd || 0)
+    this.showTemperature = localStorage.getItem('showTemperature') !== 'false'
   }
 
   newWeek () {
